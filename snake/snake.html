@@ -181,8 +181,17 @@ function update() {
 			return init();
 		}
 
-		var tail = snake.remove();
-		grid.set(EMPTY, tail.x, tail.y);
+		if(grid.get(nx, ny) === FRUIT)
+		{
+			var tail = {x:nx, y:ny};
+			setFood();
+		} else {
+			
+			var tail = snake.remove();
+			grid.set(EMPTY, tail.x, tail.y);
+
+		}
+
 
 		grid.set(SNAKE, nx, ny);
 		snake.insert(nx, ny);
