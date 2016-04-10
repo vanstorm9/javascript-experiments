@@ -19,7 +19,18 @@
 </head>
 
 <body>
+
+<center>
+<h1>Snake? Snake?! SNNAAAAAAKKEEEEEEE!!!</h1>
+
+
+Score: <div id="score_html">0</div>
+
+</center>
+</br></br>
 <script>
+var score = 0;
+var highscore = 0;
 
 // Constants
 var COLS=26, ROWS = 26;
@@ -128,6 +139,7 @@ function main() {
 }
 
 function init() {
+	score = 0;
 	grid.init(EMPTY, COLS, ROWS);
 	var sp = {x:Math.floor(COLS/2), y:ROWS-1};
 	snake.init(UP, sp.x, sp.y);
@@ -147,11 +159,25 @@ function loop(){
 function update() {
 	frames++;
 
+	document.getElementById("score_html").innerHTML = score;
+
 	
-	if(keystate[KEY_LEFT]){ snake.direction = LEFT;}
-	if(keystate[KEY_UP]){ snake.direction = UP;}
-	if(keystate[KEY_RIGHT]){ snake.direction = RIGHT;}
-	if(keystate[KEY_DOWN]){ snake.direction = DOWN;}
+	if(keystate[KEY_LEFT] && snake.direction !== RIGHT)
+	{ 
+		snake.direction = LEFT;
+	}
+	if(keystate[KEY_UP] && snake.direction !== DOWN)
+	{ 
+		snake.direction = UP;
+	}
+	if(keystate[KEY_RIGHT] && snake.direction !== RIGHT)
+	{ 
+		snake.direction = RIGHT;
+	}
+	if(keystate[KEY_DOWN] && snake.direction !== UP)
+	{ 
+		snake.direction = DOWN;
+	}
 
 
 	// each five frames update the game state.
@@ -177,15 +203,31 @@ function update() {
 		}
 
 		if(0 >nx || nx > grid.width-1 ||
-		   0 > ny || ny > grid.height-1 ||
-	           grid.get(nx,ny) === SNAKE)
+		   0 > ny || ny > grid.height-1)
 		{
+			if(score > highscore)
+			{
+				document.getElementById("highscore_html").innerHTML = score;
+				highscore = score;
+			}
+			return init();
+		}
+
+		if(grid.get(nx,ny) === SNAKE)
+		{
+			if(score > highscore)
+			{
+				document.getElementById("highscore_html").innerHTML = score;
+				highscore = score;
+			}
+			//alert("Your score is: " + score);
 			return init();
 		}
 
 		if(grid.get(nx, ny) === FRUIT)
 		{
 			var tail = {x:nx, y:ny};
+			score++;
 			setFood();
 		} else {
 			
@@ -233,7 +275,8 @@ main();
 
 </script>
 
-
+<br><br>
+High Score <div id="highscore_html">0</div>
 </body>
 
 </html>
