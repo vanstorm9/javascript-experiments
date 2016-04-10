@@ -14,17 +14,26 @@
     <script type="text/javascript">
         function leftArrowPressed() {
             var element = document.getElementById("image1");
+            if(parseInt(element.style.left) >= 0){
+                element.style.left = parseInt(element.style.left) - 5 + 'px';
+            } 
+   
         }
 
         function rightArrowPressed() {
             var element = document.getElementById("image1");
-            element.style.left = parseInt(element.style.left) + 5 + 'px';
+            if(parseInt(element.style.left) < 1520){
+                element.style.left = parseInt(element.style.left) + 5 + 'px';
+            }
 
         }
 
         function upArrowPressed() {
             var element = document.getElementById("image1");
-            element.style.top = parseInt(element.style.top) - 5 + 'px';
+
+            //if(parseInt(element.style.up) >= 0){
+                element.style.top = parseInt(element.style.top) - 5 + 'px';
+            //} 
         }
 
         function downArrowPressed() {
